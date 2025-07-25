@@ -11,12 +11,14 @@ export const getAllRecipes = query({
 export const createRecipe = mutation({
   args: {
     name: v.string(),
+    description: v.string(),
+    cookingTime: v.number(),
   },
-  handler: async (ctx, { name }) => {
+  handler: async (ctx, { name, description, cookingTime }) => {
     const recipeId = await ctx.db.insert('recipes', {
       name,
-      description: 'Something here...',
-      cookingTime: 15,
+      description,
+      cookingTime,
     })
     return recipeId
   },
