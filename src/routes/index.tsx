@@ -18,7 +18,7 @@ export const Route = createFileRoute('/')({
 })
 
 function Home() {
-  const router = useRouter()
+  // const router = useRouter()
   // const state = Route.useLoaderData()
   const { data: recipes } = useSuspenseQuery(
     convexQuery(api.recipes.getAllRecipes, {}),

@@ -1,8 +1,7 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { getAuth } from '@clerk/tanstack-react-start/server'
 import { getWebRequest } from '@tanstack/react-start/server'
-import { UserButton } from '@clerk/tanstack-react-start'
 
 const authStateFn = createServerFn({ method: 'GET' }).handler(async () => {
   const request = getWebRequest()
@@ -21,7 +20,7 @@ const authStateFn = createServerFn({ method: 'GET' }).handler(async () => {
   return { userId }
 })
 
-export const Route = createFileRoute('/protected')({
+export const Route = createFileRoute('/_protected')({
   component: ProtectedRoute,
   beforeLoad: async () => await authStateFn(),
   loader: async ({ context }) => {
@@ -33,9 +32,8 @@ function ProtectedRoute() {
   const state = Route.useLoaderData()
 
   return (
-    <div>
-      <h1>Welcome! Your ID is {state.userId}!</h1>
-      <UserButton />
-    </div>
+    <main className="px-12 py-6">
+      <Outlet />
+    </main>
   )
 }
