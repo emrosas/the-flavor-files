@@ -6,12 +6,8 @@ import appCss from '../styles/app.css?url'
 import { QueryClient } from '@tanstack/react-query'
 import { createRootRouteWithContext } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
-import {
-  Outlet,
-  createRootRoute,
-  HeadContent,
-  Scripts,
-} from '@tanstack/react-router'
+import { Outlet, HeadContent, Scripts } from '@tanstack/react-router'
+import { ClerkProvider } from '@clerk/tanstack-react-start'
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -44,14 +40,16 @@ function RootComponent() {
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html>
-      <head>
-        <HeadContent />
-      </head>
-      <body className="bg-[#F7F2E8] text-[#1B1A1A]">
-        {children}
-        <Scripts />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html>
+        <head>
+          <HeadContent />
+        </head>
+        <body className="bg-[#F7F2E8] text-[#1B1A1A]">
+          {children}
+          <Scripts />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

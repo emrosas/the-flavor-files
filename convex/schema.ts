@@ -7,6 +7,4 @@ export default defineSchema({
     description: v.string(),
     cookingTime: v.float64(),
   }),
-
-  notes: defineTable({ text: v.string() }),
 })

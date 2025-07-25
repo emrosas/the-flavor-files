@@ -5,6 +5,12 @@ import { convexQuery } from '@convex-dev/react-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import CreateRecipe from '../components/CreateRecipe'
 import RecipeCard from '../components/RecipeCard'
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/tanstack-react-start'
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -21,6 +27,14 @@ function Home() {
   return (
     <main className="px-12 py-6 grid grid-cols-[1fr_3fr] gap-8">
       <div>
+        <SignedIn>
+          <p>You are signed in</p>
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          <p>You are signed out</p>
+          <SignInButton />
+        </SignedOut>
         <h1 className="text-4xl font-medium mb-6">The Flavor Files</h1>
         <CreateRecipe />
       </div>
