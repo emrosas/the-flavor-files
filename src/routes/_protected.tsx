@@ -11,11 +11,8 @@ const authStateFn = createServerFn({ method: 'GET' }).handler(async () => {
   const { userId } = await getAuth(request)
 
   if (!userId) {
-    // This will error because you're redirecting to a path that doesn't exist yet
-    // You can create a sign-in route to handle this
-    // See https://clerk.com/docs/references/tanstack-start/custom-sign-in-or-up-page
     throw redirect({
-      to: '/',
+      to: '/sign-in',
     })
   }
 
@@ -31,8 +28,6 @@ export const Route = createFileRoute('/_protected')({
 })
 
 function ProtectedRoute() {
-  // const state = Route.useLoaderData()
-
   return (
     <main className="px-12 py-6">
       <Outlet />

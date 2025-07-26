@@ -5,7 +5,7 @@ import { convexQuery } from '@convex-dev/react-query'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import RecipeCard from '../components/RecipeCard'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_mainLayout/')({
   component: Home,
   // loader: async () => await getCount(),
 })

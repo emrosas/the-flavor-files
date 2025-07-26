@@ -9,19 +9,30 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as ProtectedRouteImport } from './routes/_protected'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ProtectedFavoritesRouteImport } fr./routes/_protected/favoritesavorites'
+import { Route as MainLayoutRouteImport } from './routes/_mainLayout'
+import { Route as MainLayoutIndexRouteImport } from './routes/_mainLayout.index'
+import { Route as ProtectedFavoritesRouteImport } from './routes/_protected/favorites'
 import { Route as ProtectedCreateRouteImport } from './routes/_protected/create'
 
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const MainLayoutRoute = MainLayoutRouteImport.update({
+  id: '/_mainLayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MainLayoutIndexRoute = MainLayoutIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => MainLayoutRoute,
 } as any)
 const ProtectedFavoritesRoute = ProtectedFavoritesRouteImport.update({
   id: '/favorites',
@@ -35,42 +46,56 @@ const ProtectedCreateRoute = ProtectedCreateRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/sign-in': typeof SignInRoute
   '/create': typeof ProtectedCreateRoute
   '/favorites': typeof ProtectedFavoritesRoute
+  '/': typeof MainLayoutIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/sign-in': typeof SignInRoute
   '/create': typeof ProtectedCreateRoute
   '/favorites': typeof ProtectedFavoritesRoute
+  '/': typeof MainLayoutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_mainLayout': typeof MainLayoutRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
+  '/sign-in': typeof SignInRoute
   '/_protected/create': typeof ProtectedCreateRoute
   '/_protected/favorites': typeof ProtectedFavoritesRoute
+  '/_mainLayout/': typeof MainLayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create' | '/favorites'
+  fullPaths: '/sign-in' | '/create' | '/favorites' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create' | '/favorites'
+  to: '/sign-in' | '/create' | '/favorites' | '/'
   id:
     | '__root__'
-    | '/'
+    | '/_mainLayout'
     | '/_protected'
+    | '/sign-in'
     | '/_protected/create'
     | '/_protected/favorites'
+    | '/_mainLayout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  MainLayoutRoute: typeof MainLayoutRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
+  SignInRoute: typeof SignInRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_protected': {
       id: '/_protected'
       path: ''
@@ -78,12 +103,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/_mainLayout': {
+      id: '/_mainLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof MainLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_mainLayout/': {
+      id: '/_mainLayout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof MainLayoutIndexRouteImport
+      parentRoute: typeof MainLayoutRoute
     }
     '/_protected/favorites': {
       id: '/_protected/favorites'
@@ -102,6 +134,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface MainLayoutRouteChildren {
+  MainLayoutIndexRoute: typeof MainLayoutIndexRoute
+}
+
+const MainLayoutRouteChildren: MainLayoutRouteChildren = {
+  MainLayoutIndexRoute: MainLayoutIndexRoute,
+}
+
+const MainLayoutRouteWithChildren = MainLayoutRoute._addFileChildren(
+  MainLayoutRouteChildren,
+)
+
 interface ProtectedRouteChildren {
   ProtectedCreateRoute: typeof ProtectedCreateRoute
   ProtectedFavoritesRoute: typeof ProtectedFavoritesRoute
@@ -117,8 +161,9 @@ const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  MainLayoutRoute: MainLayoutRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
+  SignInRoute: SignInRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
