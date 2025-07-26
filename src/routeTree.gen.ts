@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProtectedFavoritesRouteImport } fr./routes/_protected/favoritesavorites'
 import { Route as ProtectedCreateRouteImport } from './routes/_protected/create'
 
 const ProtectedRoute = ProtectedRouteImport.update({
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtectedFavoritesRoute = ProtectedFavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => ProtectedRoute,
+} as any)
 const ProtectedCreateRoute = ProtectedCreateRouteImport.update({
   id: '/create',
   path: '/create',
@@ -31,23 +37,31 @@ const ProtectedCreateRoute = ProtectedCreateRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create': typeof ProtectedCreateRoute
+  '/favorites': typeof ProtectedFavoritesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create': typeof ProtectedCreateRoute
+  '/favorites': typeof ProtectedFavoritesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_protected': typeof ProtectedRouteWithChildren
   '/_protected/create': typeof ProtectedCreateRoute
+  '/_protected/favorites': typeof ProtectedFavoritesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create'
+  fullPaths: '/' | '/create' | '/favorites'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create'
-  id: '__root__' | '/' | '/_protected' | '/_protected/create'
+  to: '/' | '/create' | '/favorites'
+  id:
+    | '__root__'
+    | '/'
+    | '/_protected'
+    | '/_protected/create'
+    | '/_protected/favorites'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -71,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_protected/favorites': {
+      id: '/_protected/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof ProtectedFavoritesRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
     '/_protected/create': {
       id: '/_protected/create'
       path: '/create'
@@ -83,10 +104,12 @@ declare module '@tanstack/react-router' {
 
 interface ProtectedRouteChildren {
   ProtectedCreateRoute: typeof ProtectedCreateRoute
+  ProtectedFavoritesRoute: typeof ProtectedFavoritesRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedCreateRoute: ProtectedCreateRoute,
+  ProtectedFavoritesRoute: ProtectedFavoritesRoute,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(

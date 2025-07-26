@@ -2,6 +2,8 @@ import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { getAuth } from '@clerk/tanstack-react-start/server'
 import { getWebRequest } from '@tanstack/react-start/server'
+import { ConvexReactClient } from 'convex/react'
+import { ConvexProviderWithClerk } from 'convex/react-clerk'
 
 const authStateFn = createServerFn({ method: 'GET' }).handler(async () => {
   const request = getWebRequest()
@@ -29,7 +31,7 @@ export const Route = createFileRoute('/_protected')({
 })
 
 function ProtectedRoute() {
-  const state = Route.useLoaderData()
+  // const state = Route.useLoaderData()
 
   return (
     <main className="px-12 py-6">
