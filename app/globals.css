@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-latte-1: #fcfbf7;
+  --color-latte-2: #f7f2e8;
+  --color-latte-3: #eadcc8;
+  --color-latte-4: #63410b;
+  --color-brand-1: #445187;
+  --color-brand-2: #4058bf;
+  --color-brand-3: #2a376f;
+  --color-dark: #1b1a1a;
+
+  --font-sans: var(--font-chivo);
+  --font-serif: var(--font-besley);
+}
+
+body {
+  @apply bg-latte-2 text-dark;
+}
