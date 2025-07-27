@@ -7,7 +7,7 @@ export default function Favorites() {
     <main>
       <Navbar />
       <div className="px-8 py-8">
-        <p>Here are your favorite recipes.</p>
+        <p>❤️ Here are your favorite recipes.</p>
       </div>
     </main>
   );

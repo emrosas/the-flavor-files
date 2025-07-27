@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useConvexAuth } from "convex/react";
+import { useConvexAuth, Authenticated, Unauthenticated } from "convex/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -26,18 +26,17 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-      {isAuthenticated ? (
+      <Authenticated>
         <SignOutButton />
-      ) : (
-        <>
-          <Link
-            href="/signin"
-            className="bg-brand-1 hover:bg-brand-2 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium transition"
-          >
-            Sign in
-          </Link>
-        </>
-      )}
+      </Authenticated>
+      <Unauthenticated>
+        <Link
+          href="/signin"
+          className="bg-brand-1 hover:bg-brand-2 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium transition"
+        >
+          Sign in
+        </Link>
+      </Unauthenticated>
     </nav>
   );
 }

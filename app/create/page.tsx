@@ -7,7 +7,7 @@ export default function Create() {
     <main>
       <Navbar />
       <div className="px-8 py-8">
-        <p>Create a recipe and share it with the world!</p>
+        <p>🧑‍🍳 Create a recipe and share it with the world!</p>
       </div>
     </main>
   );
