@@ -1,28 +1,49 @@
 "use client";
+// SVG Imports
+import Logo from "@/assets/svg/logo.svg";
+import Glasses from "@/assets/svg/glasses.svg";
+import Heart from "@/assets/svg/heart.svg";
+import Plus from "@/assets/svg/plus.svg";
 
 import { useAuthActions } from "@convex-dev/auth/react";
 import { Authenticated, Unauthenticated } from "convex/react";
 import Link from "next/link";
+
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <nav className="bg-latte-2 border-b border-latte-4/50 flex justify-between items-center px-8 py-4">
       <div className="flex items-center gap-6">
-        <Link href="/" id="logo" className="font-bold font-serif text-2xl">
-          The Flavor Files
+        <Link href="/" id="logo">
+          <Logo />
         </Link>
-        <ul className="flex gap-4">
-          <li>
-            <Link href="/">Browse</Link>
-          </li>
-          <li>
-            <Link href="/favorites">Favorites</Link>
-          </li>
-          <li>
-            <Link href="/create">Create</Link>
-          </li>
-        </ul>
+        <div className="grid grid-cols-3 bg-latte-3 rounded-md">
+          <Link
+            className={`px-3 py-1 gap-1 font-medium flex items-center justify-center rounded-md transition ${pathname === "/" ? "bg-brand-1 text-latte-1" : "hover:bg-latte-4 text-latte-5"}`}
+            href="/"
+          >
+            <Glasses />
+            Browse
+          </Link>
+          <Link
+            className={`px-3 py-1 gap-1 font-medium flex items-center justify-center rounded-md transition ${pathname === "/favorites" ? "bg-brand-1 text-latte-1" : "hover:bg-latte-4 text-latte-5"}`}
+            href="/favorites"
+          >
+            <Heart />
+            Favorites
+          </Link>
+          <Link
+            className={`px-3 py-1 gap-1 font-medium flex items-center justify-center rounded-md transition ${pathname === "/create" ? "bg-brand-1 text-latte-1" : "hover:bg-latte-4 text-latte-5"}`}
+            href="/create"
+          >
+            <Plus />
+            Create
+          </Link>
+        </div>
       </div>
       <Authenticated>
         <SignOutButton />

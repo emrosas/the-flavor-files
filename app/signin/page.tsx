@@ -69,7 +69,7 @@ function SignInForm() {
         placeholder="Password"
       />
       <button
-        className="bg-brand-1 hover:bg-brand-2 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium transition"
+        className="bg-brand-1 hover:bg-brand-2 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium cursor-pointer transition"
         type="submit"
       >
         {flow === "signIn" ? "Sign in" : "Sign up"}
