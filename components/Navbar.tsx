@@ -1,13 +1,11 @@
 "use client";
 
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useConvexAuth, Authenticated, Unauthenticated } from "convex/react";
+import { Authenticated, Unauthenticated } from "convex/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const { isAuthenticated } = useConvexAuth();
-
   return (
     <nav className="bg-latte-2 border-b border-latte-4/50 flex justify-between items-center px-8 py-4">
       <div className="flex items-center gap-6">

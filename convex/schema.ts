@@ -24,6 +24,7 @@ export default defineSchema({
     ingredients: v.array(v.string()),
     instructions: v.array(v.string()),
     user: v.id("users"),
+    featured: v.boolean(),
   }).index("by_user", ["user"]),
   favorites: defineTable({
     user: v.id("users"),
