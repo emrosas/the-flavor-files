@@ -16,7 +16,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="bg-latte-2 border-b border-latte-4/50 flex justify-between items-center px-8 py-4">
+    <nav className="bg-latte-2 border-b border-latte-4/50 flex justify-between items-center px-8 py-4 sticky top-0 h-24">
       <div className="flex items-center gap-6">
         <Link href="/" id="logo">
           <Logo />

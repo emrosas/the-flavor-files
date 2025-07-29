@@ -19,13 +19,20 @@ export default defineSchema({
     // other "users" fields...
   }).index("email", ["email"]),
   recipes: defineTable({
+    author: v.id("users"),
     title: v.string(),
     description: v.string(),
+    time: v.union(
+      v.literal("5 min"),
+      v.literal("10-15 min"),
+      v.literal("15-30 min"),
+      v.literal("30-60 min"),
+      v.literal("+1hr"),
+    ),
     ingredients: v.array(v.string()),
     instructions: v.array(v.string()),
-    user: v.id("users"),
     featured: v.boolean(),
-  }).index("by_user", ["user"]),
+  }).index("by_author", ["author"]),
   favorites: defineTable({
     user: v.id("users"),
     recipe: v.id("recipes"),
