@@ -1,4 +1,5 @@
 import { useCreateRecipeForm } from "./CreateRecipeFormProvider";
+import Time from "@/assets/svg/time.svg";
 
 export default function CreateRecipePreview() {
   return (
@@ -10,7 +11,7 @@ export default function CreateRecipePreview() {
 }
 
 function PreviewCard() {
-  const { title, description } = useCreateRecipeForm();
+  const { title, description, time } = useCreateRecipeForm();
 
   return (
     <div className="px-6 pt-6 pb-5 rounded-lg bg-latte-1 mb-8">
@@ -20,11 +21,19 @@ function PreviewCard() {
       >
         {title !== "" ? title : "Your Recipe Name"}
       </h2>
-      <p className={`${description !== "" ? "opacity-100" : "opacity-50"}`}>
+      <p
+        className={`${description !== "" ? "opacity-100" : "opacity-50"} mb-4`}
+      >
         {description !== ""
           ? description
           : "Here goes your recipe descriptiom. Keep it short and sweet (under 120 characters)."}
       </p>
+      <div>
+        <div className="flex items-center gap-2">
+          <Time />
+          <p>{time}</p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -6,10 +6,10 @@ import {
   useState,
 } from "react";
 import { Doc } from "@/convex/_generated/dataModel";
+import { WithoutSystemFields } from "convex/server";
 
-type RecipeForm = Omit<
-  Doc<"recipes">,
-  "_id" | "_creationTime" | "author" | "featured"
+type RecipeForm = WithoutSystemFields<
+  Omit<Doc<"recipes">, "author" | "featured">
 >;
 
 interface CreateRecipeFormState extends RecipeForm {
@@ -31,7 +31,7 @@ const initialFormState: CreateRecipeFormState = {
   description: "",
   instructions: [],
   ingredients: [],
-  time: "15-30 min",
+  time: "5 min",
   isSubmitting: false,
 };
 

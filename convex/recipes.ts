@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import schema from "./schema";
 
 export const getTopFeatured = query({
   handler: async (ctx) => {
@@ -36,8 +37,9 @@ export const createRecipe = mutation({
   args: {
     title: v.string(),
     description: v.string(),
+    time: schema.tables.recipes.validator.fields.time,
   },
-  handler: async (ctx, { title, description }) => {
+  handler: async (ctx, { title, description, time }) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return { data: null, error: "User not authenticated!" };
@@ -46,7 +48,7 @@ export const createRecipe = mutation({
       author: userId,
       title,
       description,
-      time: "10-15 min",
+      time,
       ingredients: [],
       instructions: [],
       featured: false,

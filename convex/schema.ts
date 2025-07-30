@@ -1,6 +1,9 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import { authTables } from "@convex-dev/auth/server";
+import { timeOptions } from "../shared/timeOptions";
+
+export const timeValidator = v.union(...timeOptions.map(v.literal));
 
 // The schema is normally optional, but Convex Auth
 // requires indexes defined on `authTables`.
@@ -22,13 +25,7 @@ export default defineSchema({
     author: v.id("users"),
     title: v.string(),
     description: v.string(),
-    time: v.union(
-      v.literal("5 min"),
-      v.literal("10-15 min"),
-      v.literal("15-30 min"),
-      v.literal("30-60 min"),
-      v.literal("+1hr"),
-    ),
+    time: timeValidator,
     ingredients: v.array(v.string()),
     instructions: v.array(v.string()),
     featured: v.boolean(),

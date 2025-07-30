@@ -1,6 +1,7 @@
 import { useCreateRecipeForm } from "./CreateRecipeFormProvider";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { timeOptions } from "@/shared/timeOptions";
 
 export default function CreateRecipeForm() {
   const {
@@ -8,6 +9,8 @@ export default function CreateRecipeForm() {
     setTitle,
     description,
     setDescription,
+    time,
+    setTime,
     isSubmitting,
     setIsSubmitting,
     clearForm,
@@ -21,6 +24,7 @@ export default function CreateRecipeForm() {
     const { data, error } = await createRecipe({
       title,
       description,
+      time,
     });
 
     if (error) console.log(error);
@@ -50,8 +54,28 @@ export default function CreateRecipeForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          className="bg-latte-2 rounded-md px-3 py-2 text-xs"
+          className="bg-latte-2 rounded-md px-3 py-2 text-xs resize-none"
         ></textarea>
+      </label>
+      <label className="flex flex-col gap-1 mb-3">
+        Time to cook
+        <select
+          onChange={(e) => {
+            const selectedValue = e.target.value as typeof time;
+            if (!timeOptions.includes(selectedValue)) {
+              console.log("Invalid Time:", selectedValue);
+              return;
+            }
+            setTime(selectedValue);
+          }}
+          className="bg-latte-2 rounded-md px-3 py-2 text-xs"
+        >
+          {timeOptions.map((timeOption) => (
+            <option key={timeOption} value={timeOption}>
+              {timeOption}
+            </option>
+          ))}
+        </select>
       </label>
       <button
         type="submit"
