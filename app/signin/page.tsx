@@ -39,16 +39,17 @@ function SignInForm() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     formData.set("flow", flow);
+    console.log(formData);
     void signIn("password", formData)
-      .then((response) => {
-        if (response && response.signingIn) {
-          if (response.redirect) {
-            router.push(response.redirect.toString());
-          }
-        } else {
-          router.push("/");
-        }
-      })
+      // .then((response) => {
+      //   if (response && response.signingIn) {
+      //     if (response.redirect) {
+      //       router.push(response.redirect.toString());
+      //     }
+      //   } else {
+      //     router.push("/");
+      //   }
+      // })
       .catch(() => {
         setError("Could not sign in.");
       });
@@ -56,6 +57,14 @@ function SignInForm() {
 
   return (
     <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+      {flow === "signUp" && (
+        <input
+          className="bg-background text-foreground rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
+      )}
       <input
         className="bg-background text-foreground rounded-md p-2 border-2 border-slate-200 dark:border-slate-800"
         type="email"

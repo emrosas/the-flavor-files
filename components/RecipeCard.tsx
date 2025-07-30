@@ -1,5 +1,6 @@
 import { Doc } from "@/convex/_generated/dataModel";
-import Heart from "@/assets/svg/heart.svg";
+// import Heart from "@/assets/svg/heart.svg";
+import Time from "@/assets/svg/time.svg";
 
 export function FeaturedRecipeCard({ recipe }: { recipe: Doc<"recipes"> }) {
   return (
@@ -8,7 +9,7 @@ export function FeaturedRecipeCard({ recipe }: { recipe: Doc<"recipes"> }) {
       <h4 className="font-medium">{recipe.title}</h4>
       <p className="text-xs">{recipe.description}</p>
       <div className="flex gap-1 items-center text-xs mt-4">
-        <Heart /> 999
+        <Time /> {recipe.time}
       </div>
     </li>
   );
@@ -24,7 +25,7 @@ export function RecipeCard({ recipe }: { recipe: Doc<"recipes"> }) {
           <p className="text-[10px] leading-tight">{recipe.description}</p>
         </div>
         <div className="flex gap-1 items-center text-xs">
-          <Heart /> 999
+          <Time /> {recipe.time}
         </div>
       </div>
     </li>

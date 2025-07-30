@@ -13,6 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as CustomProfile from "../CustomProfile.js";
 import type * as auth from "../auth.js";
 import type * as http from "../http.js";
 import type * as recipes from "../recipes.js";
@@ -26,6 +27,7 @@ import type * as recipes from "../recipes.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  CustomProfile: typeof CustomProfile;
   auth: typeof auth;
   http: typeof http;
   recipes: typeof recipes;
