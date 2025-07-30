@@ -1,5 +1,12 @@
-import { useCreateRecipeForm } from "./CreateRecipeFormProvider";
+// SVG Imports
 import Time from "@/assets/svg/time.svg";
+import User from "@/assets/svg/user.svg";
+import Heart from "@/assets/svg/heart.svg";
+
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+
+import { useCreateRecipeForm } from "./CreateRecipeFormProvider";
 
 export default function CreateRecipePreview() {
   return (
@@ -11,6 +18,7 @@ export default function CreateRecipePreview() {
 }
 
 function PreviewCard() {
+  const user = useQuery(api.users.currentUser);
   const { title, description, time } = useCreateRecipeForm();
 
   return (
@@ -26,12 +34,20 @@ function PreviewCard() {
       >
         {description !== ""
           ? description
-          : "Here goes your recipe descriptiom. Keep it short and sweet (under 120 characters)."}
+          : "Here goes your recipe description. Keep it short (under 120 characters), and tell us what makes it special."}
       </p>
-      <div>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-2">
+          <User />
+          <p>{user?.username}</p>
+        </div>
         <div className="flex items-center gap-2">
           <Time />
           <p>{time}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Heart />
+          <p>1</p>
         </div>
       </div>
     </div>
@@ -43,11 +59,13 @@ function PreviewExtra() {
   return (
     <div className="px-6 py-5 rounded-lg bg-latte-1 flex gap-4">
       <div className="grow">
-        <h3 className="text-xl font-semibold font-serif">Ingredients</h3>
+        <h3 className="text-xl font-semibold font-serif mb-2">Ingredients</h3>
         {ingredients && ingredients.length > 0 ? (
-          <ul>
+          <ul className="list-disc">
             {ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
+              <li className="ml-4" key={index}>
+                {ingredient}
+              </li>
             ))}
           </ul>
         ) : (
@@ -55,11 +73,13 @@ function PreviewExtra() {
         )}
       </div>
       <div className="grow">
-        <h3 className="text-xl font-semibold font-serif">Instructions</h3>
+        <h3 className="text-xl font-semibold font-serif mb-2">Instructions</h3>
         {instructions && instructions.length > 0 ? (
-          <ol>
+          <ol className="list-decimal">
             {instructions.map((instruction, index) => (
-              <li key={index}>{instruction}</li>
+              <li className="ml-4" key={index}>
+                {instruction}
+              </li>
             ))}
           </ol>
         ) : (

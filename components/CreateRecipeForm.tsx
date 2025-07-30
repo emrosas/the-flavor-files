@@ -12,6 +12,8 @@ export default function CreateRecipeForm() {
     setDescription,
     time,
     setTime,
+    instructions,
+    setInstructions,
     isSubmitting,
     setIsSubmitting,
     clearForm,
@@ -28,6 +30,7 @@ export default function CreateRecipeForm() {
       title,
       description,
       time,
+      instructions,
     });
 
     if (error) console.log(error);
@@ -38,7 +41,11 @@ export default function CreateRecipeForm() {
     clearForm();
   };
 
-  const handleSetInstructions = () => {};
+  const handleSetInstructions = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setInstructions([...instructions, instructionsInput]);
+    setInstructionsInput("");
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -60,7 +67,7 @@ export default function CreateRecipeForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={4}
-          placeholder="Eg. These cook"
+          placeholder="Eg. These cookies are a classic favorite. They're soft, chewy, and packed with chocolate chips. They're perfect for a sweet treat after a meal or as a snack."
           className="bg-latte-2 rounded-md px-3 py-2 text-xs resize-none"
         ></textarea>
       </label>
@@ -95,7 +102,10 @@ export default function CreateRecipeForm() {
             placeholder="Eg. In a large bowl, whisk together the flour, sugar, baking powder, baking soda, and salt."
             className="bg-latte-2 rounded-md px-3 py-2 text-xs grow"
           ></input>
-          <button className="bg-latte-5 hover:bg-latte-4 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium transition">
+          <button
+            onClick={handleSetInstructions}
+            className="bg-latte-5 hover:bg-latte-4 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium transition"
+          >
             Add
           </button>
         </div>

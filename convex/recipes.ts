@@ -38,8 +38,9 @@ export const createRecipe = mutation({
     title: v.string(),
     description: v.string(),
     time: schema.tables.recipes.validator.fields.time,
+    instructions: v.array(v.string()),
   },
-  handler: async (ctx, { title, description, time }) => {
+  handler: async (ctx, { title, description, time, instructions }) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return { data: null, error: "User not authenticated!" };
@@ -50,7 +51,7 @@ export const createRecipe = mutation({
       description,
       time,
       ingredients: [],
-      instructions: [],
+      instructions,
       featured: false,
     });
 
