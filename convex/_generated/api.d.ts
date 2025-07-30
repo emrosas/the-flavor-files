@@ -14,7 +14,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as CustomProfile from "../CustomProfile.js";
-import type * as auth from "../auth.js";
+import type * as auth from "../auth.j../CustomProfile.js
 import type * as http from "../http.js";
 import type * as recipes from "../recipes.js";
 

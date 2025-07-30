@@ -41,15 +41,15 @@ function SignInForm() {
     formData.set("flow", flow);
     console.log(formData);
     void signIn("password", formData)
-      // .then((response) => {
-      //   if (response && response.signingIn) {
-      //     if (response.redirect) {
-      //       router.push(response.redirect.toString());
-      //     }
-      //   } else {
-      //     router.push("/");
-      //   }
-      // })
+      .then((response) => {
+        if (response && response.signingIn) {
+          if (response.redirect) {
+            router.push(response.redirect.toString());
+          }
+        } else {
+          router.push("/");
+        }
+      })
       .catch(() => {
         setError("Could not sign in.");
       });

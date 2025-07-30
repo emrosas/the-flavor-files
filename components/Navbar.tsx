@@ -5,6 +5,8 @@ import Glasses from "@/assets/svg/glasses.svg";
 import Heart from "@/assets/svg/heart.svg";
 import Plus from "@/assets/svg/plus.svg";
 
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { Authenticated, Unauthenticated } from "convex/react";
 import Link from "next/link";
@@ -61,19 +63,26 @@ export default function Navbar() {
 }
 
 function SignOutButton() {
+  const user = useQuery(api.users.currentUser);
   const { signOut } = useAuthActions();
   const router = useRouter();
 
   return (
-    <button
-      className="bg-brand-1 hover:bg-brand-3 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium transition cursor-pointer"
-      onClick={() =>
-        void signOut().then(() => {
-          router.push("/signin");
-        })
-      }
-    >
-      Sign out
-    </button>
+    <div>
+      <span className="mr-3">
+        Welcome back{user?.username && ", "}
+        {user?.username}!
+      </span>
+      <button
+        className="bg-brand-1 hover:bg-brand-3 text-latte-1 rounded-md px-4 pt-[6px] pb-2 font-medium transition cursor-pointer"
+        onClick={() =>
+          void signOut().then(() => {
+            router.push("/signin");
+          })
+        }
+      >
+        Sign out
+      </button>
+    </div>
   );
 }
