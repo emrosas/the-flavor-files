@@ -10,9 +10,9 @@ export default function Favorites() {
   const userRecipes = useQuery(api.recipes.getUserRecipes);
 
   return (
-    <main>
+    <main className="h-screen flex flex-col">
       <Navbar />
-      <div className="px-8 py-8">
+      <div className="px-8 py-8 grow flex flex-col">
         <div className="flex -mb-[2px]">
           <h1 className="capitalize font-serif text-2xl font-semibold bg-latte-3 px-4 py-2 rounded-t-xl">
             Your Recipes
@@ -22,7 +22,7 @@ export default function Favorites() {
             <span className="text-[8px] font-sans">Coming Soon</span>
           </div>
         </div>
-        <div className="p-4 pt-6 bg-latte-3 rounded-b-xl rounded-tr-xl">
+        <div className="p-4 pt-6 bg-latte-3 rounded-b-xl rounded-tr-xl grow">
           {userRecipes?.data ? (
             <ul className="grid grid-cols-3 gap-6">
               {userRecipes.data.map((recipe) => (

@@ -3,6 +3,8 @@ import Time from "@/assets/svg/time.svg";
 import User from "@/assets/svg/user.svg";
 import Heart from "@/assets/svg/heart.svg";
 
+import Image from "next/image";
+
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 
@@ -19,11 +21,20 @@ export default function CreateRecipePreview() {
 
 function PreviewCard() {
   const user = useQuery(api.users.currentUser);
-  const { title, description, time } = useCreateRecipeForm();
+  const { title, description, time, temporaryImageUrl } = useCreateRecipeForm();
 
   return (
-    <div className="px-6 pt-6 pb-5 rounded-lg bg-latte-1 mb-8">
-      <div className="aspect-video bg-brand-3 rounded-md mb-2" />
+    <div className="px-6 pt-6 pb-5 rounded-xl bg-latte-1 mb-8">
+      <div className="aspect-video bg-brand-3 rounded-md mb-2 relative">
+        {temporaryImageUrl && (
+          <Image
+            src={temporaryImageUrl}
+            alt="Recipe Image"
+            fill
+            className="object-cover rounded-md absolute inset-0"
+          />
+        )}
+      </div>
       <h2
         className={`font-medium text-3xl ${title !== "" ? "opacity-100" : "opacity-50"}`}
       >
@@ -57,14 +68,24 @@ function PreviewCard() {
 function PreviewExtra() {
   const { ingredients, instructions } = useCreateRecipeForm();
   return (
-    <div className="px-6 py-5 rounded-lg bg-latte-1 flex gap-4">
+    <div className="px-6 py-5 rounded-xl bg-latte-1 grid grid-cols-2 gap-4">
       <div className="grow">
         <h3 className="text-xl font-semibold font-serif mb-2">Ingredients</h3>
         {ingredients && ingredients.length > 0 ? (
           <ul className="list-disc">
             {ingredients.map((ingredient, index) => (
-              <li className="ml-4" key={index}>
-                {ingredient}
+              <li className="ml-4 gap-4" key={index}>
+                <div className="flex item-center justify-between">
+                  <p>{ingredient.name}</p>
+                  <div className="grid grid-cols-2 gap-1">
+                    <p className="font-medium text-right text-sm">
+                      {ingredient.quantity}
+                    </p>
+                    <p className="text-[8px] mt-[2px] opacity-50">
+                      {ingredient.unit}
+                    </p>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>

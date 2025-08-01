@@ -1,7 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import { authTables } from "@convex-dev/auth/server";
-import { timeOptions } from "../shared/timeOptions";
+import { timeOptions } from "../shared/recipeOptions";
 
 export const timeValidator = v.union(...timeOptions.map(v.literal));
 
@@ -26,8 +26,15 @@ export default defineSchema({
     title: v.string(),
     description: v.string(),
     time: timeValidator,
-    ingredients: v.array(v.string()),
+    ingredients: v.array(
+      v.object({
+        name: v.string(),
+        quantity: v.float64(),
+        unit: v.string(),
+      }),
+    ),
     instructions: v.array(v.string()),
+    image: v.optional(v.id("_storage")),
     featured: v.boolean(),
   }).index("by_author", ["author"]),
   favorites: defineTable({

@@ -14,6 +14,7 @@ type RecipeForm = WithoutSystemFields<
 
 interface CreateRecipeFormState extends RecipeForm {
   isSubmitting: boolean;
+  temporaryImageUrl: string | null;
 }
 
 interface CreateRecipeFormContextType extends CreateRecipeFormState {
@@ -23,6 +24,7 @@ interface CreateRecipeFormContextType extends CreateRecipeFormState {
   setInstructions: Dispatch<SetStateAction<RecipeForm["instructions"]>>;
   setIngredients: Dispatch<SetStateAction<RecipeForm["ingredients"]>>;
   setIsSubmitting: Dispatch<SetStateAction<boolean>>;
+  setTemporaryImageUrl: Dispatch<SetStateAction<string | null>>;
   clearForm: () => void;
 }
 
@@ -33,6 +35,7 @@ const initialFormState: CreateRecipeFormState = {
   ingredients: [],
   time: "5 min",
   isSubmitting: false,
+  temporaryImageUrl: null,
 };
 
 const CreateRecipeFormContext = createContext<
@@ -52,6 +55,9 @@ export function CreateRecipeFormProvider({
   );
   const [time, setTime] = useState(initialFormState.time);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [temporaryImageUrl, setTemporaryImageUrl] = useState<string | null>(
+    null,
+  );
 
   const clearForm = () => {
     setTitle("");
@@ -60,6 +66,7 @@ export function CreateRecipeFormProvider({
     setInstructions([]);
     setTime("15-30 min");
     setIsSubmitting(false);
+    setTemporaryImageUrl(null);
 
     // if (isClient) {
     //   localStorage.removeItem("recipeFormState");
@@ -79,6 +86,8 @@ export function CreateRecipeFormProvider({
         setInstructions,
         time,
         setTime,
+        temporaryImageUrl,
+        setTemporaryImageUrl,
         isSubmitting,
         setIsSubmitting,
         clearForm,
